@@ -259,6 +259,7 @@
                         });
                     }
                     break;
+
                 case "post":
                     if (tabela == "radio_novosti") {
                         // kada je post zahtev u pitanju, potrebno je da 
@@ -293,30 +294,37 @@
                     break;
 
                 case "put":
-                // if (tabela == "radio_novosti") {
-                //         var values = {
-                //             "naslov": $("input[name=naslov_novosti]").val(),
-                //             "tekst": $("#tekst_novosti").val(),
-                //             "kategorija_id": parseInt($("#kategorija_odabir").val())
-                //         };
-                        
-                //         $.post("http://localhost:80/rest/api/novosti", JSON.stringify(values), function (data) {
-                //             alert("Odgovor od servera> " + data['poruka']);
-                //         });
-                //     } else {
-                //         var values = {
-                //             "kategorija": $("input[name=kategorija_naziv]").val(),
-                //         }
-                //         console.log(values);
-                //         $.post("http://localhost:80/rest/api/kategorije", JSON.stringify(values), function (data) {
-                //             alert("Odgovor od servera> " + data['poruka']);
-                //         });
-                //     }
-                //     break;
+                    if (tabela == "radio_novosti") {
+                        var idPut = $("input[name=id_novosti]").val();
+                        var values = {
+                            "naslov": $("input[name=naslov_novosti_put]").val(),
+                            "tekst": $("#tekst_novosti_put").val(),
+                            "kategorija_id": parseInt($("#kategorija_odabir_put").val())
+                        };
+                        console.log(values);
+                        $.ajax({
+                            url: 'http://localhost:80/rest/api/novosti/' + idPut, type: 'PUT', data: JSON.stringify(values), success: function (result) {
+                                alert("Odgovor od servera> " + result['poruka']);
+                            }
+                        });
+                    } else {
+                        var idPut = $("input[name=id_kategorije]").val();
+                        var values = {
+                            "kategorija": $("input[name=kategorija_naziv_put]").val()
+                        };
+                        console.log(values);
+                        $.ajax({
+                            url: 'http://localhost:80/rest/api/kategorije/' + idPut, type: 'PUT', data: JSON.stringify(values), success: function (result) {
+                                alert("Odgovor od servera> " + result['poruka']);
+                            }
+                        });
+                    }
+                    break;
 
                 case "delete":
                     if (tabela == "radio_novosti") {
                         var values = $("input[name=brisanje]").val();
+                        console.log(values);
                         $.ajax({
                             url: 'http://localhost:80/rest/api/novosti/' + values, type: 'DELETE', success: function (result) {
                                 alert("Odgovor od servera> " + result['poruka']);
@@ -324,6 +332,7 @@
                         });
                     } else {
                         var values = $("input[name=brisanje]").val();
+                        console.log(values);
                         $.ajax({
                             url: 'http://localhost:80/rest/api/kategorije/' + values, type: 'DELETE', success: function (result) {
                                 alert("Odgovor od servera> " + result['poruka']);
